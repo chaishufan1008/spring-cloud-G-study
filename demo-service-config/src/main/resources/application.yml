@@ -1,0 +1,39 @@
+server:
+    port: 8371
+
+spring:
+    profiles:
+        active: jdbc #将配置中心的存储实现切换到jdbc的方式
+    cloud:
+        config:
+            server:
+                jdbc:
+                    sql: SELECT `KEY`, `VALUE` from CONFIG_PROPERTY where APPLICATION=? and PROFILE=? and LABEL=?
+    application:
+        name: demo-service-config
+    datasource:
+        url: jdbc:h2:~/scs;AUTO_SERVER=TRUE
+        username: sa
+        password:
+    jpa:
+        show-sql: true
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8361/eureka/
+    instance:
+        # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+        prefer-ip-address: true
+
+rabbitmq: #本地环境不需要配置mq，但是需要启动mq,Springboot会自动连接本地mq
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+management:
+    endpoints:
+        web:
+            exposure:
+                include: bus-refresh #暴露/bus-refresh接口

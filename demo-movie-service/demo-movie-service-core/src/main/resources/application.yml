@@ -1,0 +1,49 @@
+server:
+    port: 8311
+
+spring:
+    application:
+        name: demo-movie-service
+        version: 1.0.0
+    main:
+        allow-bean-definition-overriding: true
+    cloud:
+        stream:
+            bindings:
+                demoChannel:
+                    group: Demo-Channel
+                    destination: Demo-Topic
+#        sentinel:
+#            transport:
+#                dashboard: localhost:8858 #sentinel dashboard
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8361/eureka/
+    instance:
+        # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+        prefer-ip-address: true
+
+dubbo:
+    registry:
+#        address: zookeeper://localhost:2181
+        # 挂载到 Spring Cloud 注册中心
+        address: spring-cloud://localhost
+    cloud:
+        subscribed-services: demo-user-service
+    protocol:
+        id: dubbo
+        name: dubbo
+        port: -1 #-1表示自动从20800递增
+    provider:
+        timeout: 5000
+    consumer:
+        timeout: 5000
+
+#feign:
+#    hystrix:
+#        enabled: true
+#feign.sentinel.enabled: true
+logging:
+    level:
+        com.study.springcloud.dubbo.movie.core.client.UserLocalClient: debug

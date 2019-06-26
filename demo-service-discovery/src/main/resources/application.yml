@@ -1,0 +1,16 @@
+server:
+    port: 8361
+
+spring:
+    application:
+        name: demo-service-discovery
+
+eureka:
+    instance:
+        hostname: ${spring.application.name}
+    client:
+        service-url:
+            defaultZone: http://localhost:8361/eureka/
+        fetch-registry: false
+        register-with-eureka: false
+

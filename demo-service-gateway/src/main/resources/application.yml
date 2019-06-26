@@ -1,0 +1,19 @@
+server:
+    port: 8351
+
+spring:
+    application:
+        name: demo-service-gateway
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+                    lower-case-service-id: true
+        sentinel:
+            transport:
+                dashboard: localhost:8858  #sentinel dashboard
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8361/eureka/

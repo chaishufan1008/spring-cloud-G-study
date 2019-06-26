@@ -1,0 +1,42 @@
+server:
+    port: 8301
+
+spring:
+    datasource:
+        url: jdbc:h2:~/scs;AUTO_SERVER=TRUE
+        username: sa
+        password:
+    jpa:
+        show-sql: true
+    main:
+        allow-bean-definition-overriding: true
+    cloud:
+        sentinel:
+            transport:
+                dashboard: localhost:8858  #sentinel dashboard
+#        stream:
+#            binders:
+#                testBinder:
+#                    type: rabbit
+#            bindings:
+#                demoChannel:
+#                    destination: Demo-Topic
+#                    content-type: text/plain #application/json
+#                    binder: testBinder
+
+dubbo:
+    registry:
+        address: spring-cloud://localhost
+#        address: zookeeper://localhost:2181
+    protocol:
+        id: dubbo
+        name: dubbo
+        port: -1
+#    provider:
+#        timeout: 5000
+    scan:
+        base-packages: com.study.springcloud.dubbo
+
+demo:
+    user:
+        testKey1: localValue1

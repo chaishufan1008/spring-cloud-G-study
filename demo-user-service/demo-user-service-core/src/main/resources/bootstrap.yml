@@ -1,0 +1,45 @@
+spring:
+    profiles:
+        active: nacos
+    application:
+        name: demo-user-service
+
+eureka:
+    client:
+        service-url:
+            defaultZone: http://localhost:8361/eureka/
+    instance:
+        # 是否注册IP到eureka server，如不指定或设为false，那就会注册主机名到eureka server
+        prefer-ip-address: true
+
+---
+spring:
+    profiles: springcloudconfig
+    application:
+        name: demo-user-service
+        version: 1.0.0
+    cloud:
+        config:
+            discovery: #  通过配置中心找到config server
+                enabled: true
+                service-id: demo-service-config
+#                uri: http://localhost:8371/ # 指定config server地址
+            profile: develop
+            label: test
+
+rabbitmq: #本地环境不需要配置mq
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+---
+spring:
+    profiles: nacos
+    cloud:
+        nacos:
+            config:
+                server-addr: localhost:8848
+                file-extension: yaml
+                group: DEMO_GROUP
+
